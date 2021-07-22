@@ -24,7 +24,6 @@ public class UsuarioResource {
 	public ResponseEntity<List<Usuario>> findAll(){
 		//Usuario u = new Usuario(1L, "teste", "teste@teste.com", "85855252", "123");
 		List<Usuario> lista = service.findAll();
-		
 		return ResponseEntity.ok().body(lista);
 	}
 	

@@ -1,11 +1,16 @@
 package com.codetec.curso.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Usuario implements Serializable {
@@ -20,8 +25,12 @@ public class Usuario implements Serializable {
 	private String fone;
 	private String senha;
 	
+	//um usuário tem vários pedidos
+	@JsonIgnore
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
+	
 	public Usuario() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Usuario(Long id, String nome, String email, String fone, String senha) {
@@ -71,6 +80,10 @@ public class Usuario implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public List<Pedido> getPedidos() {
+		return pedidos;
 	}
 
 	@Override
