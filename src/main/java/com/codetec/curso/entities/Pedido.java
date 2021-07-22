@@ -10,19 +10,22 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.codetec.curso.entities.enums.StatusPedido;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Pedido implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant dataPedido;
+
+	private Integer status;
 
 	// um ou vários pedidos corresponde a um cliente
 	@ManyToOne
@@ -33,10 +36,11 @@ public class Pedido implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Pedido(Long id, Instant dataPedido, Usuario cliente) {
+	public Pedido(Long id, Instant dataPedido, StatusPedido status, Usuario cliente) {
 		super();
 		this.id = id;
 		this.dataPedido = dataPedido;
+		setStatus(status);
 		this.cliente = cliente;
 	}
 
@@ -54,6 +58,16 @@ public class Pedido implements Serializable {
 
 	public void setDataPedido(Instant dataPedido) {
 		this.dataPedido = dataPedido;
+	}
+
+	public StatusPedido getStatus() {
+		return StatusPedido.valueOf(status);
+	}
+
+	public void setStatus(StatusPedido status) {
+		if (status != null) {
+			this.status = status.getCodigo();
+		}
 	}
 
 	public Usuario getCliente() {
