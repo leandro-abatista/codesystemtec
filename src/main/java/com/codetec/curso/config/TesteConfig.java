@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.codetec.curso.entities.Categoria;
 import com.codetec.curso.entities.ItemPedido;
+import com.codetec.curso.entities.Pagamento;
 import com.codetec.curso.entities.Pedido;
 import com.codetec.curso.entities.Produto;
 import com.codetec.curso.entities.Usuario;
@@ -83,6 +84,12 @@ public class TesteConfig implements CommandLineRunner {
 		ItemPedido itemPedido4 = new ItemPedido(pedido3, produto5, 2, produto5.getPreco());
 		
 		itemPedidoRepository.saveAll(Arrays.asList(itemPedido1, itemPedido2, itemPedido3, itemPedido4));
+		
+		Pagamento pagamento1 = new Pagamento(null, Instant.parse("2021-06-20T21:53:07Z"), pedido1);
+		
+		pedido1.setPagamento(pagamento1);
+		
+		pedidorepository.save(pedido1);
 	}
 	
 	
