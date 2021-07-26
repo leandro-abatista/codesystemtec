@@ -3,6 +3,8 @@ package com.codetec.curso.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -43,10 +45,15 @@ public class UsuarioService {
 	}
 	
 	public Usuario atualizar(Long id, Usuario usuario) {
-		//deixa o objeto monitorado e prepara para fazer qualquer ação com o objto
-		Usuario entity = repository.getOne(id);
-		atualizarDados(entity, usuario);
-		return repository.save(entity);
+		try {
+			//deixa o objeto monitorado e prepara para fazer qualquer ação com o objto
+			Usuario entity = repository.getOne(id);
+			atualizarDados(entity, usuario);
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
+		
 	}
 
 	private void atualizarDados(Usuario entity, Usuario usuario) {
