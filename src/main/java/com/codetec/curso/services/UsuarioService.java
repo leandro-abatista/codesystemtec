@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.codetec.curso.entities.Usuario;
 import com.codetec.curso.repositories.UsuarioRepository;
+import com.codetec.curso.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UsuarioService {
@@ -21,7 +22,7 @@ public class UsuarioService {
 
 	public Usuario findById(Long id) {
 		Optional<Usuario> usuario = repository.findById(id);
-		return usuario.get();
+		return usuario.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
 	public Usuario cadastrar(Usuario usuario) {
